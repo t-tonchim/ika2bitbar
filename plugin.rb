@@ -15,19 +15,21 @@ def request(path = '/')
     http.request(req)
   end
 
-  res.code == '200' ? JSON.parse(res.body, symbolize_names: true)[:result] : nil
+  return {} unless res.code == '200'
+
+  JSON.parse(res.body, symbolize_names: true)[:result].first
 end
 
 def gachi
-  @gachi ||= request('/gachi/now')&.first || {}
+  @gachi ||= request('/gachi/now')
 end
 
 def regular
-  @regular ||= request('/regular/now')&.first || {}
+  @regular ||= request('/regular/now')
 end
 
 def league
-  @league ||= request('/league/now')&.first || {}
+  @league ||= request('/league/now')
 end
 
 puts '🦑'
